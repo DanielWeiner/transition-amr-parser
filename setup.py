@@ -24,13 +24,8 @@ install_requires = [
     # for aws download
     'boto3>=1.26.1',
     'progressbar',
+    'fairseq',
 ]
-
-# platform dependent fairseq version
-if sys.platform == 'darwin':
-    install_requires.append("fairseq==0.10.0")
-else:
-    install_requires.append("fairseq==0.10.2")
 
 if __name__ == '__main__':
     setup(
