@@ -32,7 +32,7 @@ from tqdm import tqdm
 
 from amr_utils import convert_amr_to_tree, compute_pairwise_distance, get_node_ids
 from amr_utils import safe_read as safe_read_
-from formatter import read_amr_pretty_file
+from .formatter import read_amr_pretty_file
 from metric_utils import distortion_proxy
 
 

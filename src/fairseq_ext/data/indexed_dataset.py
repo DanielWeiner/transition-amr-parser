@@ -14,7 +14,7 @@ import torch
 from fairseq.data import FairseqDataset
 
 
-def __best_fitting_dtype(vocab_size=None):
+def best_fitting_int_dtype(vocab_size=None):
     if vocab_size is not None and vocab_size < 65500:
         return np.uint16
     else:
@@ -44,7 +44,7 @@ def infer_dataset_impl(path):
 def make_builder(out_file, impl, vocab_size=None, dtype=None):
     if impl == 'mmap':
         if dtype is None:
-            dtype = __best_fitting_dtype(vocab_size)
+            dtype = best_fitting_int_dtype(vocab_size)
         return MMapIndexedDatasetBuilder(out_file, dtype=dtype)
     else:
         return IndexedDatasetBuilder(out_file)

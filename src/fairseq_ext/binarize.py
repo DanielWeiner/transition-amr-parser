@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from fairseq.data.indexed_dataset import __best_fitting_dtype, MMapIndexedDatasetBuilder, IndexedDatasetBuilder
+from fairseq.data.indexed_dataset import best_fitting_int_dtype, MMapIndexedDatasetBuilder, IndexedDatasetBuilder
 from fairseq.tokenizer import tokenize_line
 
 
@@ -8,7 +8,7 @@ from fairseq.tokenizer import tokenize_line
 def make_builder(out_file, impl, vocab_size=None, dtype=None):
     if impl == 'mmap':
         if dtype is None:
-            dtype = __best_fitting_dtype(vocab_size)
+            dtype = best_fitting_int_dtype(vocab_size)
         return MMapIndexedDatasetBuilder(out_file, dtype=dtype)
     else:
         return IndexedDatasetBuilder(out_file)

@@ -8,7 +8,7 @@ from tqdm import tqdm
 import numpy as np
 
 from evaluation import EvalAlignments
-from formatter import amr_to_pretty_format
+from .formatter import amr_to_pretty_format
 from transition_amr_parser.io import read_amr
 
 

@@ -13,7 +13,7 @@ import torch
 
 from fairseq import checkpoint_utils, progress_bar, tasks, utils
 from fairseq.scoring import bleu
-from fairseq.meters import StopwatchMeter, TimeMeter
+from fairseq.logging.meters import StopwatchMeter, TimeMeter
 
 from fairseq_ext.utils_import import import_user_module
 from fairseq_ext import options

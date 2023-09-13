@@ -4,7 +4,7 @@ import os
 
 from amr_utils import safe_read
 from evaluation import EvalAlignments
-from formatter import amr_to_pretty_format
+from .formatter import amr_to_pretty_format
 from transition_amr_parser.io import read_amr2
 
 

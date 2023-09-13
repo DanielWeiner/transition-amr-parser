@@ -1,7 +1,7 @@
 import argparse
 import copy
 
-from austin_amr_utils.amr_readers import AMR_Reader
+from amr_utils.amr_readers import AMR_Reader
 from transition_amr_parser.io import read_amr2
 
 

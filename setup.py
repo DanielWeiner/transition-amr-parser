@@ -25,6 +25,9 @@ install_requires = [
     'boto3>=1.26.1',
     'progressbar',
     'fairseq',
+    'tensorboardX',
+    'amr_utils',
+    'matplotlib'
 ]
 
 if __name__ == '__main__':
