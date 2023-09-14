@@ -169,7 +169,7 @@ def main(args):
         
         
         # ========== for bartsv task, rebuild the dictionary based on model args ==========
-        if 'bartsv' in _model_args.arch and args.node_freq_min != _model_args.node_freq_min:
+        if 'bartsv' in _model_args.task.arch and args.node_freq_min != _model_args.node_freq_min:
             args.node_freq_min = _model_args.node_freq_min
             # Load dataset splits
             task = tasks.setup_task(args)
@@ -293,7 +293,7 @@ def main(args):
                         #     line_tokenizer=task.tokenize,
                         # )
         
-                        if 'bartsv' in _model_args.arch:
+                        if 'bartsv' in _model_args.task.arch:
                             if not tgt_dict[hypo['tokens'][0]].startswith(tgt_dict.bpe.INIT):
                                 error_stats['num_sub_start'] += 1
         

@@ -619,7 +619,7 @@ class AMRParser:
     def from_pretrained(cls, model_name, dict_dir=None,
                         roberta_cache_path=None, fp16=False,
                         inspector=None, beam=1, nbest=1, num_samples=None,
-                        sampling_topp=-1, temperature=1.0):
+                        sampling_topp=-1, temperature=1.0, cpu=False):
         """ Load model checkpoints from available model names;
         Will check if the model is downloaded to cache, if not, download from cloud storage;
         Below is a list of available modelnames to trun
@@ -734,13 +734,13 @@ class AMRParser:
         return cls.from_checkpoint(checkpoint_path, dict_dir,
                                    roberta_cache_path, fp16, inspector,
                                    beam, nbest, num_samples, sampling_topp,
-                                   temperature)
+                                   temperature, cpu)
 
     @classmethod
     def from_checkpoint(cls, checkpoint, dict_dir=None,
                         roberta_cache_path=None, fp16=False,
                         inspector=None, beam=1, nbest=1, num_samples=None,
-                        sampling_topp=-1, temperature=1.0):
+                        sampling_topp=-1, temperature=1.0, cpu=False):
         """ Load a checkpoint from model path
 
         Args:
@@ -781,7 +781,7 @@ class AMRParser:
         if dict_dir is not None:
             args.model_overrides['data'] = dict_dir
             # otherwise, the default dict folder is read from the model args
-        use_cuda = torch.cuda.is_available() and not args.cpu
+        use_cuda = torch.cuda.is_available() and not args.cpu and not cpu
         models, model_args, task = load_models_and_task(
             args, use_cuda, task=None
         )
@@ -795,9 +795,9 @@ class AMRParser:
             args.sampling = True
 
         # load pretrained Roberta model for source embeddings
-        if model_args.pretrained_embed_dim == 768:
+        if model_args.criterion.pretrained_embed_dim == 768:
             pretrained_embed = 'bart.base'
-        elif model_args.pretrained_embed_dim == 1024:
+        elif model_args.criterion.pretrained_embed_dim == 1024:
             pretrained_embed = 'bart.large'
         else:
             raise ValueError
@@ -812,7 +812,7 @@ class AMRParser:
         #     'data configuration file not found'
 
         print("pretrained_embed: ", pretrained_embed)
-        embeddings = SentenceEncodingBART(name=pretrained_embed)
+        embeddings = SentenceEncodingBART(name=pretrained_embed, use_cuda=use_cuda)
 
         print("Finished loading models")
 
@@ -941,7 +941,7 @@ class AMRParser:
             sample_predictions = []
             for j, hypo in enumerate(hypos[i][:self.args.nbest]):
                 # args.nbest is default 1, i.e. saving only the top predictions
-                if 'bartsv' in self.model_args.arch:
+                if 'bartsv' in self.model_args.task.arch:
                     # shared vocabulary BART
 
                     actions_nopos, actions_pos, actions = \
@@ -1006,7 +1006,7 @@ class AMRParser:
             10.
         """
         # check if model is bartsv and force_actions are given
-        if 'bartsv' in self.model_args.arch and force_actions is not None:
+        if 'bartsv' in self.model_args.task.arch and force_actions is not None:
             raise Exception(
                 "The given model is a joint vocabulary model (bartsv) and does not support force actions. Please provide a different model or remove force actions")
 

@@ -39,6 +39,7 @@ __pycache__/
 *.ipynb_checkpoints/
 *.ipynb
 transition_amr_parser.egg-info/
+transition_neural_parser.egg-info/
 
 # python package
 dist/

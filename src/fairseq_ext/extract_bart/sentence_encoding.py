@@ -103,14 +103,14 @@ def get_scatter_indices(word2piece, reverse=False):
 
 
 class SentenceEncodingBART:
-    def __init__(self, name):
+    def __init__(self, name, use_cuda=True):
         # bart model name
         self.name = name
 
         if name in ['bart.base', 'bart.large']:
             self.model = torch.hub.load('pytorch/fairseq', name)
             self.model.eval()
-            if torch.cuda.is_available():
+            if use_cuda and torch.cuda.is_available():
                 self.model.cuda()
                 print(f'Using {name} extraction in GPU')
             else:

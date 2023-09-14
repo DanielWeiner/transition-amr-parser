@@ -177,6 +177,7 @@ class AMRActionPointerParsingTask(FairseqTask):
 
     def __init__(self, args, src_dict=None, tgt_dict=None):
         super().__init__(args)
+        self.args = args
         self.src_dict = src_dict    # src_dict is not necessary if we use RoBERTa embeddings for source
         self.tgt_dict = tgt_dict
         self.action_state_binarizer = None
@@ -346,7 +347,7 @@ class AMRActionPointerParsingTask(FairseqTask):
             from fairseq.sequence_scorer import SequenceScorer
             return SequenceScorer(self.target_dictionary)
         else:
-            if 'graph' in model_args.arch:
+            if 'graph' in model_args.task.arch:
                 from fairseq_ext.sequence_generator_graph import SequenceGenerator
             else:
                 from fairseq_ext.sequence_generator import SequenceGenerator

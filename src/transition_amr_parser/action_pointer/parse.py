@@ -250,9 +250,9 @@ class AMRParser:
 
         # ===== load pretrained Roberta model for source embeddings =====
         # need "pretrained_embed" and "bert_layers"
-        if model_args.pretrained_embed_dim == 768:
+        if model_args.criterion.pretrained_embed_dim == 768:
             pretrained_embed = 'roberta.base'
-        elif model_args.pretrained_embed_dim == 1024:
+        elif model_args.criterion.pretrained_embed_dim == 1024:
             pretrained_embed = 'roberta.large'
         else:
             raise ValueError
